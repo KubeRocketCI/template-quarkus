@@ -1,8 +1,10 @@
-FROM quay.io/quarkus/quarkus-micro-image:2.0 as build
-COPY target/quarkus-app/lib/ /deployments/lib/
-COPY target/quarkus-app/*.jar /deployments/
-COPY target/quarkus-app/app/ /deployments/app/
-COPY target/quarkus-app/quarkus/ /deployments/quarkus/
+FROM eclipse-temurin:21-jre-jammy
+WORKDIR /app
 
-EXPOSE 8080
-CMD ["java", "-jar", "/deployments/quarkus-run.jar"]
+# Copy the Quarkus runner JAR and lib directory
+COPY target/quarkus-app/lib/ /app/lib/
+COPY target/quarkus-app/*.jar /app/
+COPY target/quarkus-app/app/ /app/app/
+COPY target/quarkus-app/quarkus/ /app/quarkus/
+
+CMD ["java", "-jar", "quarkus-run.jar"]
